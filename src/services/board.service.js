@@ -61,6 +61,18 @@ export async function getSprintByBoardId(boardId) {
     return {message : sprints , status: 200}
 }
 
+export async function removeUserFromBoard(boardId , userId) {
+    const board = await Board.findById(boardId);
+    if(!board){
+        return {message : "Board doesn't exist!" , status : 404}
+    }  
+    const res = await Board.updateOne(
+        {_id: boardId},
+        {$pull: {'users' : userId}}
+    )
+    return {message : "User removed from board!" , status: 200}
+}
+
 export async function deleteBoard(boardId) {
     const board = await Board.findById(boardId);
     if(!board){

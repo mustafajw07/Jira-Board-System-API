@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { body ,validationResult } from "express-validator";
 import roleMiddleware from '../middlewares/auth.js';
-import {getUserAllBoard , getAllBoard  , addBoard , deleteBoard , getBoardById ,  getSprintByBoardId, updateBoard} from '../services/board.service.js'
+import {getUserAllBoard , getAllBoard  , addBoard , deleteBoard , getBoardById ,  getSprintByBoardId, updateBoard , removeUserFromBoard} from '../services/board.service.js'
 
 const router = Router();
 
 router.get('/boards' , roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']) ,async (req , res) => {
     try {
-        const response = await getUserAllBoard(req.user.id);
+        const response = await getAllBoard()
         return res.status(response.status).json(response.boards);
     } catch (error) {
         console.log(error);
@@ -17,7 +17,7 @@ router.get('/boards' , roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']) ,as
 
 router.get('/user/boards' , roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']) ,async (req , res) => {
     try {
-        const response = await getAllBoard();
+        const response = await getUserAllBoard(req.user.id);
         return res.status(response.status).json(response.boards);
     } catch (error) {
         console.log(error);
@@ -69,6 +69,16 @@ router.post('/board' , roleMiddleware(['Scrum']) , [
 router.put('/board/:boardId' , roleMiddleware(['Scrum']) ,async (req , res) => {
     try {
         const response = await updateBoard(req.params.boardId , req.body.boardName , req.body.description , req.body.users);
+        return res.status(response.status).json(response.message);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Internal server error!" });
+    }
+});
+
+router.delete('/board/:boardId/:userId' , roleMiddleware(['Scrum']) ,async (req , res) => {
+    try {
+        const response = await removeUserFromBoard(req.params.boardId , req.params.userId);
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
