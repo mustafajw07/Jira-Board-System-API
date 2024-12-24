@@ -42,7 +42,7 @@ export async function updateBoard(boardId ,boardName , description , users) {
 }
 
 export async function getBoardById(boardId) {
-    const board = await Board.findById(boardId).populate('users');
+    const board = await Board.findById(boardId).populate('users' , "-password");
     if(!board){
         return {message : "Board doesn't exist!" , status : 404}
     }
