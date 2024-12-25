@@ -1,14 +1,14 @@
 import { Router } from "express";
-import { getSprintById , addSprint , updateSprint , deleteSprint } from "../services/sprint.service.js";
+import { getSprintBoardById , addSprint , updateSprint , deleteSprint } from "../services/sprint.service.js";
 import { body ,validationResult } from "express-validator";
 import roleMiddleware from '../middlewares/auth.js';
 
 const router = Router()
 
-router.get('/sprint/:sprintId' , roleMiddleware(['Scrum' , 'Developer' , 'Tech Lead']) , async (req , res) => {
+router.get('/sprint/:boardId' , roleMiddleware(['Scrum' , 'Developer' , 'Tech Lead']) , async (req , res) => {
     try {
-        let sprintId = req.params.sprintId;
-        const response = await getSprintById(sprintId);
+        let boardId = req.params.boardId;
+        const response = await getSprintBoardById(boardId);
         return res.status(response.status).json({sprint : response.message});
     } catch (error) {
         console.log(error);

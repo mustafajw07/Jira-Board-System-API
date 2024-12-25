@@ -1,7 +1,7 @@
 import Sprint from "../models/Sprint.js";
 
-export async function getSprintById(sprintId) {
-    const sprint = await Sprint.findById(sprintId);
+export async function getSprintBoardById(boardId) {
+    const sprint = await Sprint.find({boardId});
     if(!sprint){
         return {message : "Sprint not found!" , status : 404}
     }
