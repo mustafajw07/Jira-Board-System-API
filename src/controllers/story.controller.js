@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getStoryOnBoard , getStoryForUser , getStoryById, addStory ,deleteStory } from "../services/story.service.js";
+import { getStoryOnBoard , getStoryForUser , getStoryById, addStory ,deleteStory, updateStory } from "../services/story.service.js";
 import { body ,validationResult } from "express-validator";
 import roleMiddleware from '../middlewares/auth.js';
 
@@ -37,8 +37,7 @@ router.get("/story/:storyId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'Develope
 
 router.post("/story/:boardId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']), [
     body("title").notEmpty(),
-    body("description").notEmpty(),
-    body("reporter").notEmpty(),
+    body("description").notEmpty()
 ] ,async (req ,res) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
@@ -46,6 +45,16 @@ router.post("/story/:boardId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'Develop
     }
     try {
         const response = await addStory(req.params.boardId ,req.body , req.user.id);
+        return res.status(response.status).json(response.message);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Internal server error!" });
+    }
+});
+
+router.put("/story/:storyId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']),async (req ,res) => {
+    try {
+        const response = await updateStory(req.params.storyId ,req.body , req.user.id);
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);

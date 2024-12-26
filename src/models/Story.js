@@ -35,7 +35,7 @@ const storySchema = new Schema({
       ref: 'User',
       default: null
     },
-    sprintId: {
+    sprint: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Sprint',
       default: null

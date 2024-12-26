@@ -9,13 +9,13 @@ export async function getStoryOnBoard(boardId) {
     if(!board){
         return {message : "Board not found!" , status : 404};
     }
-    const stories = await Story.find({boardId}).populate(['reporter' , 'teamMember' , 'assigned' , 'sprintId' , 'epic' , 'status' , 'type' , 'priority']);
+    const stories = await Story.find({boardId}).populate(['reporter' , 'teamMember' , 'assigned' , 'sprint' , 'epic' , 'status' , 'type' , 'priority']);
     return {message : stories , status : 200};
 }
 
 
 export async function getStoryById(storyId) {
-    const story = await Story.findById(storyId).populate(['reporter' , 'teamMember' , 'assigned' , 'sprintId' , 'epic' , 'status' , 'type' , 'priority']);
+    const story = await Story.findById(storyId).populate(['reporter' , 'teamMember' , 'assigned' , 'sprint' , 'epic' , 'status' , 'type' , 'priority']);
     if(!story){
         return {message : "Story not found!" , status : 404};
     }
@@ -38,7 +38,7 @@ export async function addStory(boardId , body , userId) {
     }
     const boardUsers = board.users.map((user) => user.toString());
     if(!boardUsers.includes(userId)){
-        return {message : "User don't have permission to add story on this board!" , status : 404};
+        return {message : "User don't have permission to add story on this board!" , status : 400};
     }
 
     let priority = await StoryPriority.find({priority : "Medium"});
@@ -54,7 +54,7 @@ export async function addStory(boardId , body , userId) {
         reporter : userId,
         teamMember : body.teamMember ? body.teamMember : null,
         assigned : body.assigned ? body.assigned : null,
-        sprintId : body.sprintId ? body.sprintId : null,
+        sprint : body.sprintId ? body.sprintId : null,
         epic : body.epic ? body.epic : null,
         status: body.status ? body.status : status[0]._id.toString(),
         type : body.type ? body.type : type[0]._id.toString(),
@@ -70,29 +70,32 @@ export async function updateStory(storyId , body , userId) {
     if(!story){
         return {message : "Story not found!" , status : 404};
     }
-
+    const board = await Board.findById(story.boardId);
+    if(!board){
+        return {message : "Board not found!" , status : 404};
+    }
     const boardUsers = board.users.map((user) => user.toString());
     if(!boardUsers.includes(userId)){
-        return {message : "User don't have permission to update story on this board!" , status : 404};
+        return {message : "User don't have permission to update story on this board!" , status : 400};
     }
 
     story = {
-        title : body.title,
-        description : board.description,
+        title : body.title ? body.title : story.title,
+        description : body.description ? body.description : story.description,
         storyPoint : body.storyPoint ? body.storyPoint : story.storyPoint,
         flag : body.flag ? body.flag : story.flag,
         boardId: story.boardId,
         reporter : body.reporter ? body.reporter : story.reporter,
         teamMember : body.teamMember ? body.teamMember : story.teamMember,
         assigned : body.assigned ? body.assigned : story.assigned,
-        sprintId : body.sprintId ? body.sprintId : story.sprintId,
+        sprint : body.sprintId ? body.sprintId : story.sprint,
         epic : body.epic ? body.epic : story.epic,
         status: body.status ? body.status : story.status,
         type : body.type ? body.type : story.type,
         priority : body.priority ? body.priority : story.priority
     };
     
-    await findByIdAndUpdate({})
+    await Story.findByIdAndUpdate(storyId , {$set : story} , { new: true })
     return {message : "Story updated successfully!" , status : 200};
 }
 
