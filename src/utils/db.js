@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
 
+import dotenv from 'dotenv';
+
+dotenv.config()
+
+
 async function connectDb() {
-    await mongoose.connect('mongodb+srv://killeralex762:Killeral98!@cluster0.pz8a3y3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0' , {useNewUrlParser: true});
+    await mongoose.connect(process.env.DB_URL , {useNewUrlParser: true});
     console.log('Database connected');
 }
 mongoose.set('strictQuery', false);
