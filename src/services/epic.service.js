@@ -2,7 +2,7 @@ import Board from '../models/Board.js';
 import Epic from '../models/Epic.js';
 
 export async function getEpicsByBoardId(boardId) {
-    const board = await Board.findById(boardId);
+    const board = await Board.findById(boardId).select("-boardId");
     if(!board){
         return {"message" : "Board not found!" , status : 404}
     }
