@@ -11,7 +11,7 @@ router.get("/story-priority", roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer
       return res.status(response.status).json({priorities : response.message});
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ error: "Internal server error!" });
+      return res.status(500).json("Internal server error!");
     }
   });
   
@@ -27,7 +27,7 @@ router.get("/story-priority", roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer
       return res.status(response.status).json(response.message);
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ error: "Internal server error!" });
+      return res.status(500).json("Internal server error!");
     }
   });
 

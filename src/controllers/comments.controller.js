@@ -8,10 +8,10 @@ const router = Router();
 router.get("/comment/:storyId", roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']) , async (req, res) => {
     try {
       const response = await getComments(req.params.storyId);
-      return res.status(response.status).json({comments : response.message});
+      return res.status(response.status).json(response.message);
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ error: "Internal server error!" });
+      return res.status(500).json("Internal server error!");
     }
   });
   
@@ -27,7 +27,7 @@ const result = validationResult(req);
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -38,7 +38,7 @@ router.put("/comment/:commentId", roleMiddleware(['Scrum' ,'Tech Lead' , 'Develo
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -48,7 +48,7 @@ router.delete("/comment/:commentId", roleMiddleware(['Scrum' , 'Tech Lead' , 'De
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 export default router;

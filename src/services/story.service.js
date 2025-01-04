@@ -9,13 +9,13 @@ export async function getStoryOnBoard(boardId) {
     if(!board){
         return {message : "Board not found!" , status : 404};
     }
-    const stories = await Story.find({boardId}).populate(['reporter' , 'teamMember' , 'assigned' , 'sprint' , 'epic' , 'status' , 'type' , 'priority']);
+    const stories = await Story.find({boardId}).populate(['reporter' , 'assigned' , 'sprint' , 'epic' , 'status' , 'type' , 'priority']);
     return {message : stories , status : 200};
 }
 
 
 export async function getStoryById(storyId) {
-    const story = await Story.findById(storyId).populate(['reporter' , 'teamMember' , 'assigned' , 'sprint' , 'epic' , 'status' , 'type' , 'priority']);
+    const story = await Story.findById(storyId).populate(['reporter' , 'assigned' , 'sprint' , 'epic' , 'status' , 'type' , 'priority']);
     if(!story){
         return {message : "Story not found!" , status : 404};
     }
@@ -48,17 +48,15 @@ export async function addStory(boardId , body , userId) {
     let story = new Story({
         title : body.title,
         description : board.description,
-        storyPoint : body.storyPoint ? body.storyPoint : null,
-        flag : body.flag ? body.flag : false,
         boardId,
-        reporter : userId,
-        teamMember : body.teamMember ? body.teamMember : null,
-        assigned : body.assigned ? body.assigned : null,
         sprint : body.sprintId ? body.sprintId : null,
+        storyPoint : body.storyPoint ? body.storyPoint : null,
+        reporter : body.reporter ? body.reporter : userId,
+        assigned : body.assigned ? body.assigned : null,
         epic : body.epic ? body.epic : null,
-        status: body.status ? body.status : status[0]._id.toString(),
+        priority : body.priority ? body.priority : priority[0]._id.toString(),
         type : body.type ? body.type : type[0]._id.toString(),
-        priority :body.priority ? body.priority : priority[0]._id.toString()
+        status: body.status ? body.status : status[0]._id.toString()
     });
 
     await story.save()
@@ -83,10 +81,8 @@ export async function updateStory(storyId , body , userId) {
         title : body.title ? body.title : story.title,
         description : body.description ? body.description : story.description,
         storyPoint : body.storyPoint ? body.storyPoint : story.storyPoint,
-        flag : body.flag ? body.flag : story.flag,
         boardId: story.boardId,
         reporter : body.reporter ? body.reporter : story.reporter,
-        teamMember : body.teamMember ? body.teamMember : story.teamMember,
         assigned : body.assigned ? body.assigned : story.assigned,
         sprint : body.sprintId ? body.sprintId : story.sprint,
         epic : body.epic ? body.epic : story.epic,

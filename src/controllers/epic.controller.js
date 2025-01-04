@@ -12,35 +12,36 @@ router.get('/epic/:boardId' , roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json("Internal server error");
     }
 });
 
-router.post('/epic' , roleMiddleware(['Scrum' , 'Tech Lead']) ,[
-    body('epicName').notEmpty(),
-    body('description').notEmpty(),
-    body('boardId').notEmpty(),
+router.post('/epic/:boardId' , roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']) ,[
+    body('title').notEmpty(),
+    body('description').notEmpty()
 ] ,async (req , res) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
         return res.status(400).send("Enter all required fields");
     }
     try {
-        const response = await addEpic(req.body.epicName , req.body.description , req.body.boardId);
+        console.log();
+        
+        const response = await addEpic(req.body , req.user.id ,req.params.boardId);
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json("Internal server error");
     }
 });
 
 router.put('/epic/:epicId' , roleMiddleware(['Scrum' , 'Tech Lead']) ,async (req , res) => {
     try {
-        const response = await updateEpic(req.body.epicName, req.body.description , req.body.boardId  , req.params.epicId);
+        const response = await updateEpic(req.body.summary, req.body.description , req.params.epicId);
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json("Internal server error");
     }
 });
 
@@ -50,7 +51,7 @@ router.delete('/epic/:epicId' , roleMiddleware(['Scrum' , 'Tech Lead']) ,async (
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json("Internal server error");
     }
 });
 

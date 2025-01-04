@@ -11,7 +11,7 @@ router.get("/user/story/:boardId", roleMiddleware(['Scrum' , 'Tech Lead' , 'Deve
         return res.status(response.status).json({stories : response.message});
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -21,7 +21,7 @@ router.get("/board/story/:boardId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'De
         return res.status(response.status).json({stories : response.message});
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -31,7 +31,7 @@ router.get("/story/:storyId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'Develope
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -41,14 +41,14 @@ router.post("/story/:boardId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'Develop
 ] ,async (req ,res) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
-      return res.status(400).json({error : "Enter all required fields!"});
+      return res.status(400).json("Enter all required fields!");
     }
     try {
         const response = await addStory(req.params.boardId ,req.body , req.user.id);
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -58,7 +58,7 @@ router.put("/story/:storyId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'Develope
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -68,7 +68,7 @@ router.delete("/story/:storyId" , roleMiddleware(['Scrum']),async (req ,res) => 
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 

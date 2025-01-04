@@ -13,10 +13,6 @@ const storySchema = new Schema({
       type: Number,
       default: null
     },
-    flag: {
-        type: Boolean,
-        default: false
-    },
     boardId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Board',
@@ -24,11 +20,6 @@ const storySchema = new Schema({
     reporter: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-    },
-    teamMember: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      default: null
     },
     assigned: {
       type: mongoose.Schema.Types.ObjectId,

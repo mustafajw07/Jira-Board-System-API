@@ -8,30 +8,30 @@ const router = Router();
 router.get("/sprint/release/:sprintId", roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']), async (req, res) => {
   try {
     const response = await getReleaseBySprintId(req.params.sprintId);
-    return res.status(response.status).json({releases : response.message})
+    return res.status(response.status).json(response.message)
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "Internal server error!" });
+    return res.status(500).json("Internal server error!");
   }
 });
 
 router.get("/board/release/:boardId", roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']), async (req, res) => {
   try {
     const response = await getReleaseByBoardId(req.params.boardId);
-    return res.status(response.status).json({releases : response.message})
+    return res.status(response.status).json(response.message)
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "Internal server error!" });
+    return res.status(500).json("Internal server error!");
   }
 });
 
 router.get("/release/:releaseId", roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']) , async (req, res) => {
   try {
     const response = await getReleaseById(req.params.releaseId);
-    return res.status(response.status).json({release : response.message})
+    return res.status(response.status).json(response.message)
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "Internal server error!" });
+    return res.status(500).json("Internal server error!");
   }
 });
 
@@ -48,7 +48,7 @@ router.post("/release", roleMiddleware(['Scrum']) ,[
     return res.status(response.status).json(response.message)
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "Internal server error!" });
+    return res.status(500).json("Internal server error!");
   }
 });
 
@@ -58,7 +58,7 @@ router.delete("/release/:releaseId", roleMiddleware(['Scrum']) , async (req, res
         return res.status(response.status).json(response.message)
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 

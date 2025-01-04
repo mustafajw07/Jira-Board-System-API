@@ -12,7 +12,7 @@ router.get('/sprint/:boardId' , roleMiddleware(['Scrum' , 'Developer' , 'Tech Le
         return res.status(response.status).json({sprint : response.message});
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -33,7 +33,7 @@ async (req , res) => {
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -43,7 +43,7 @@ router.put('/sprint/:sprintId' , roleMiddleware(['Scrum']) , async (req , res) =
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -53,7 +53,7 @@ router.delete('/sprint/:sprintId' , roleMiddleware(['Scrum']) , async (req , res
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 

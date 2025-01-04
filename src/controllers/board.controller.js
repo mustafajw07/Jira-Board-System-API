@@ -11,7 +11,7 @@ router.get('/boards' , roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']) ,as
         return res.status(response.status).json(response.boards);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!" );
     }
 });
 
@@ -21,7 +21,7 @@ router.get('/user/boards' , roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']
         return res.status(response.status).json(response.boards);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -33,7 +33,7 @@ router.get('/board/:boardId' , roleMiddleware(['Scrum' , 'Tech Lead' , 'Develope
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!" );
     }
 });
 
@@ -44,7 +44,7 @@ router.get('/board/sprint/:boardId' , roleMiddleware(['Scrum' , 'Developer' , 'T
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!" );
     }
 });
 
@@ -62,7 +62,7 @@ router.post('/board' , roleMiddleware(['Scrum']) , [
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -72,7 +72,7 @@ router.put('/board/:boardId' , roleMiddleware(['Scrum']) ,async (req , res) => {
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!");
     }
 });
 
@@ -82,7 +82,7 @@ router.delete('/board/:boardId/:userId' , roleMiddleware(['Scrum']) ,async (req 
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!" );
     }
 });
 
@@ -93,7 +93,7 @@ router.delete('/board/:boardId' , roleMiddleware(['Scrum']) ,async (req , res) =
         return res.status(response.status).json(response.message);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "Internal server error!" });
+        return res.status(500).json("Internal server error!" );
     }
 });
 

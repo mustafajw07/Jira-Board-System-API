@@ -1,5 +1,7 @@
 import Board from '../models/Board.js';
 import Epic from '../models/Epic.js';
+import StoryPriority from "../models/StoryPriority.js"
+
 
 export async function getEpicsByBoardId(boardId) {
     const board = await Board.findById(boardId).select("-boardId");
@@ -14,30 +16,33 @@ export async function getEpicsByBoardId(boardId) {
 }
 
 
-export async function addEpic(epicName , description ,boardId) {
+export async function addEpic(body , userId ,boardId) {
     const board = await Board.findById(boardId);
+    const {title , description} = body;
     if(!board){
         return {"message" : "Board not found!" , status : 404}
     }
+    let priority = await StoryPriority.find({priority : "Medium"});
     let epic = new Epic({
-        epicName,
+        title,
         description,
         boardId,
+        reporter : userId,
+        priority :body.priority ? body.priority : priority[0]._id.toString()
     });
     await epic.save()
     return {"message" : "Epic added successfully!" , status : 200}
 }
 
 
-export async function updateEpic(epicName , description ,boardId , epicId) {
+export async function updateEpic(title , description , epicId) {
     let epic = await Epic.findById(epicId);
     if(!epic){
         return {"message" : "Epic not found!" , status : 404}
     }
     epic = {
-        epicName,
-        description,
-        boardId,
+        title,
+        description
     }
     await Epic.findByIdAndUpdate(epicId , {$set : epic} , { new: true });
     return {"message" : "Epic updated successfully!" , status : 200}

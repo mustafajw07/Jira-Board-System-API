@@ -11,7 +11,7 @@ router.get("/users", roleMiddleware(['Scrum' , 'Developer' , 'Tech Lead']) , asy
     return res.status(response.status).json({users : response.message});
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "Internal server error!" });
+    return res.status(500).json("Internal server error!");
   }
 });
 
@@ -21,7 +21,7 @@ router.get("/profile", roleMiddleware(['Scrum' , 'Developer' , 'Tech Lead']) , a
     return res.status(response.status).json({user : response.message});
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "Internal server error!" });
+    return res.status(500).json("Internal server error!");
   }
 });
 
@@ -31,7 +31,7 @@ router.get("/profile/role", roleMiddleware(['Scrum' , 'Developer' , 'Tech Lead']
     return res.status(response.status).json({role : response.message});
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "Internal server error!" });
+    return res.status(500).json("Internal server error!");
   }
 });
 
@@ -43,7 +43,7 @@ router.post("/register", [
 ], async (req, res) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
-    return res.status(400).json({error : "Enter valid Credentials!"});
+    return res.status(400).json("Enter valid Credentials!");
   }
   try {
     const response = await registerUser(req.body.userName , req.body.email , req.body.password , req.body.roleId);
@@ -51,7 +51,7 @@ router.post("/register", [
     return res.status(response.status).json(response.message);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "Internal server error!" });
+    return res.status(500).json("Internal server error!");
   }
 });
 
@@ -68,7 +68,7 @@ router.post("/login", [
     return res.status(response.status).json({message : response.message});
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "Internal server error!" });
+    return res.status(500).json("Internal server error!");
   }
 });
 

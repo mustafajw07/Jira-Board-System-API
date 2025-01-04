@@ -2,7 +2,7 @@ import { mongoose, Schema } from "mongoose";
 
 const epicSchema = new Schema(
   {
-    epicName: {
+    title: {
       type: String,
       require: true
     },
@@ -14,6 +14,14 @@ const epicSchema = new Schema(
         type: mongoose.Schema.Types.ObjectId,
         require: true,
         ref: "Board"
+    },
+    priority: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'StoryPriority',
+    },
+    reporter: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
   },
   {
