@@ -11,7 +11,7 @@ router.get('/epic/:boardId' , roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer
         const response = await getEpicsByBoardId(req.params.boardId);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error");
     }
 });
@@ -30,7 +30,7 @@ router.post('/epic/:boardId' , roleMiddleware(['Scrum' , 'Tech Lead' , 'Develope
         const response = await addEpic(req.body , req.user.id ,req.params.boardId);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error");
     }
 });
@@ -40,7 +40,7 @@ router.put('/epic/:epicId' , roleMiddleware(['Scrum' , 'Tech Lead']) ,async (req
         const response = await updateEpic(req.body.summary, req.body.description , req.params.epicId);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error");
     }
 });
@@ -50,7 +50,7 @@ router.delete('/epic/:epicId' , roleMiddleware(['Scrum' , 'Tech Lead']) ,async (
         const response = await deleteEpic(req.params.epicId);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error");
     }
 });

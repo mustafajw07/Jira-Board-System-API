@@ -10,7 +10,7 @@ router.get("/comment/:storyId", roleMiddleware(['Scrum' , 'Tech Lead' , 'Develop
       const response = await getComments(req.params.storyId);
       return res.status(response.status).json(response.message);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return res.status(500).json("Internal server error!");
     }
   });
@@ -26,7 +26,7 @@ const result = validationResult(req);
         const response = await addComment(req.body.description , req.user.id , req.params.storyId);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });
@@ -37,7 +37,7 @@ router.put("/comment/:commentId", roleMiddleware(['Scrum' ,'Tech Lead' , 'Develo
         const response = await updateComment(req.body.description , req.user.id , req.params.commentId);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });
@@ -47,7 +47,7 @@ router.delete("/comment/:commentId", roleMiddleware(['Scrum' , 'Tech Lead' , 'De
         const response = await deleteComment(req.params.commentId , req.user.id);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });

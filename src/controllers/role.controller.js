@@ -10,7 +10,7 @@ router.get("/roles", roleMiddleware(['Scrum']) , async (req, res) => {
     const response = await getRoles();
     return res.status(response.status).json({roles : response.message})
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });
@@ -26,7 +26,7 @@ router.post("/roles", roleMiddleware(['Scrum']) ,[
     const response = await addRole(req.body.title);
     return res.status(response.status).json(response.message)
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });

@@ -43,7 +43,7 @@ export async function addStory(boardId , body , userId) {
 
     let priority = await StoryPriority.find({priority : "Medium"});
     let type = await StoryType.find({type : "Story"});
-    let status = await StoryStatus.find({name : "Backlog"});
+    let status = await StoryStatus.find({name : "Todo"});
 
     let story = new Story({
         title : body.title,

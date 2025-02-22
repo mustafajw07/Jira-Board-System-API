@@ -8,13 +8,32 @@ export async function getSprintBoardById(boardId) {
     return {message : sprint , status : 200};
 }
 
+export async function geActivetSprintBoardById(boardId) {
+    let sprint = await Sprint.find({boardId});
+    if(!sprint){
+        return {message : "Sprint not found!" , status : 404}
+    }
+    sprint = sprint.filter((s) => {
+        let diff = new Date().getTime() - s.endDate.getTime();
+        return diff < 0;
+    });
+    return {message : sprint , status : 200};
+}
+
 export async function addSprint(body) {
     const sprintName = body.sprintName;
     const sprintNo = body.sprintNo;
     const startDate = new Date(body.startDate);
     const endDate = new Date(body.endDate);
     const boardId = body.boardId;
-
+    let allSprint = await Sprint.find({boardId});
+    allSprint = allSprint.filter((s) => {
+        let diff = new Date().getTime() - s.endDate.getTime();
+        return diff < 0;
+    });
+    if(allSprint.length > 0){
+        return {message : "One Sprint is already Active" , status : 400};
+    }
     const sprint = new Sprint({
         sprintName,
         sprintNo,
@@ -22,7 +41,6 @@ export async function addSprint(body) {
         endDate,
         boardId
     });
-
     await sprint.save()
     return {message : "Sprint added successfully!" , status : 200}
 }

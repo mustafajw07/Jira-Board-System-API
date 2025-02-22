@@ -10,7 +10,7 @@ router.get("/sprint/release/:sprintId", roleMiddleware(['Scrum' , 'Tech Lead' , 
     const response = await getReleaseBySprintId(req.params.sprintId);
     return res.status(response.status).json(response.message)
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });
@@ -20,7 +20,7 @@ router.get("/board/release/:boardId", roleMiddleware(['Scrum' , 'Tech Lead' , 'D
     const response = await getReleaseByBoardId(req.params.boardId);
     return res.status(response.status).json(response.message)
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });
@@ -30,7 +30,7 @@ router.get("/release/:releaseId", roleMiddleware(['Scrum' , 'Tech Lead' , 'Devel
     const response = await getReleaseById(req.params.releaseId);
     return res.status(response.status).json(response.message)
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });
@@ -47,7 +47,7 @@ router.post("/release", roleMiddleware(['Scrum']) ,[
     const response = await addRole(req.body.title);
     return res.status(response.status).json(response.message)
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });
@@ -57,7 +57,7 @@ router.delete("/release/:releaseId", roleMiddleware(['Scrum']) , async (req, res
         const response = await deleteRelease(req.params.releaseId);
         return res.status(response.status).json(response.message)
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });

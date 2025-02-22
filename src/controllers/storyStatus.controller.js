@@ -8,9 +8,9 @@ const router = Router();
 router.get("/story-status", roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']) , async (req, res) => {
     try {
       const response = await getStoryStatus();
-      return res.status(response.status).json({statues : response.message});
+      return res.status(response.status).json(response.message);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return res.status(500).json("Internal server error!");
     }
   });
@@ -26,7 +26,7 @@ router.get("/story-status", roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']
       const response = await addStatus(req.body.name);
       return res.status(response.status).json(response.message);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return res.status(500).json("Internal server error!");
     }
   });

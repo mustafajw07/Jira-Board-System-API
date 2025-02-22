@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getSprintBoardById , addSprint , updateSprint , deleteSprint } from "../services/sprint.service.js";
+import { getSprintBoardById , addSprint , updateSprint , deleteSprint , geActivetSprintBoardById } from "../services/sprint.service.js";
 import { body ,validationResult } from "express-validator";
 import roleMiddleware from '../middlewares/auth.js';
 
@@ -11,11 +11,21 @@ router.get('/sprint/:boardId' , roleMiddleware(['Scrum' , 'Developer' , 'Tech Le
         const response = await getSprintBoardById(boardId);
         return res.status(response.status).json({sprint : response.message});
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });
 
+router.get('/sprint/active/:boardId' , roleMiddleware(['Scrum' , 'Developer' , 'Tech Lead']) , async (req , res) => {
+    try {
+        let boardId = req.params.boardId;
+        const response = await geActivetSprintBoardById(boardId);
+        return res.status(response.status).json({sprint : response.message});
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Internal server error!");
+    }
+});
 
 router.post('/sprint' , roleMiddleware(['Scrum']) , 
     body('sprintNo').notEmpty(),
@@ -32,7 +42,7 @@ async (req , res) => {
         const response = await addSprint(req.body);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });
@@ -42,7 +52,7 @@ router.put('/sprint/:sprintId' , roleMiddleware(['Scrum']) , async (req , res) =
         const response = await updateSprint(req.body , req.params.sprintId);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });
@@ -52,7 +62,7 @@ router.delete('/sprint/:sprintId' , roleMiddleware(['Scrum']) , async (req , res
         const response = await deleteSprint(req.params.sprintId);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });

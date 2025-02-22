@@ -10,7 +10,7 @@ router.get("/story-type", roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']) 
       const response = await getStoryTypes();
       return res.status(response.status).json(response.message);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return res.status(500).json("Internal server error!");
     }
   });
@@ -26,7 +26,7 @@ router.get("/story-type", roleMiddleware(['Scrum' , 'Tech Lead' , 'Developer']) 
       const response = await addType(req.body.type);
       return res.status(response.status).json(response.message);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return res.status(500).json("Internal server error!");
     }
   });

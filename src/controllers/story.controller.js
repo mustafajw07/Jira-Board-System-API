@@ -10,7 +10,7 @@ router.get("/user/story/:boardId", roleMiddleware(['Scrum' , 'Tech Lead' , 'Deve
         const response = await getStoryForUser(req.params.boardId , req.user.id);
         return res.status(response.status).json({stories : response.message});
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });
@@ -20,7 +20,7 @@ router.get("/board/story/:boardId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'De
         const response = await getStoryOnBoard(req.params.boardId);
         return res.status(response.status).json({stories : response.message});
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });
@@ -30,7 +30,7 @@ router.get("/story/:storyId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'Develope
         const response = await getStoryById(req.params.storyId);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });
@@ -47,7 +47,7 @@ router.post("/story/:boardId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'Develop
         const response = await addStory(req.params.boardId ,req.body , req.user.id);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });
@@ -57,7 +57,7 @@ router.put("/story/:storyId" , roleMiddleware(['Scrum' , 'Tech Lead' , 'Develope
         const response = await updateStory(req.params.storyId ,req.body , req.user.id);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });
@@ -67,7 +67,7 @@ router.delete("/story/:storyId" , roleMiddleware(['Scrum']),async (req ,res) => 
         const response = await deleteStory(req.params.storyId);
         return res.status(response.status).json(response.message);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json("Internal server error!");
     }
 });

@@ -10,7 +10,7 @@ router.get("/users", roleMiddleware(['Scrum' , 'Developer' , 'Tech Lead']) , asy
     const response = await getAllUsers();
     return res.status(response.status).json({users : response.message});
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });
@@ -20,7 +20,7 @@ router.get("/profile", roleMiddleware(['Scrum' , 'Developer' , 'Tech Lead']) , a
     const response = await getUser(req.user.id);
     return res.status(response.status).json({user : response.message});
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });
@@ -30,7 +30,7 @@ router.get("/profile/role", roleMiddleware(['Scrum' , 'Developer' , 'Tech Lead']
     const response = await getUserWithRole(req.user.id);
     return res.status(response.status).json({role : response.message});
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });
@@ -50,7 +50,7 @@ router.post("/register", [
     
     return res.status(response.status).json(response.message);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });
@@ -67,7 +67,7 @@ router.post("/login", [
     const response = await loginUser(req.body.email , req.body.password);
     return res.status(response.status).json({message : response.message});
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json("Internal server error!");
   }
 });
